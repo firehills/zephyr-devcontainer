@@ -23,36 +23,24 @@ west zephyr-export
 # Install Python dependencies.
 west packages pip --install
 
-# install SDK - "west sdk install" is all toolchains
+# install SDK by default these install into home dir ~
 # See https://github.com/zephyrproject-rtos/sdk-ng
 cd $ZEPHYR_ROOT/zephyr
 
 # ALL toolchains !! (Probably overkill!)
-west sdk install
+# west sdk install 
 
-
-# TODO -> pick just the toolchains you want 
-# See https://docs.zephyrproject.org/latest/develop/toolchains/zephyr_sdk.html#toolchain-zephyr-sdk-install
-
-# TODO some combination of the below cmds...
-#wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_linux-x86_64_minimal.tar.xz
-#wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_linux-x86_64.tar.xz
-#wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz
-
-#wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/sha256.sum | shasum --check --ignore-missing
-#tar xvf zephyr-sdk-0.17.0_linux-x86_64.tar.xz
-#cd zephyr-sdk-0.17.0
-#./setup.sh
-
-# udev rules - which allow you to flash most Zephyr boards as a regular user:
-#sudo cp ~/zephyr-sdk-0.17.0/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
-#sudo udevadm control --reload
+# Select toolchains (version selected from ${ZEPHYR_BASE}/SDK_VERSION file.)
+west sdk install  -t aarch64-zephyr-elf arm-zephyr-eabi   
 
 END_TIMESTAMP=$(date)
 echo "START = $START_TIMESTAMP, END = $END_TIMESTAMP"
 echo "=========================== DONE ==============================="
 # run "west boards" to see supported builds 
+
+
 # build blinkey 
+# -------------
 
 # cd /workspaces/zephyrproject
 # source .venv/bin/activate
