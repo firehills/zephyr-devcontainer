@@ -1,11 +1,17 @@
 #!/bin/bash
-cd ~
-python3 -m venv ~/zephyrproject/.venv
-source ~/zephyrproject/.venv/bin/activate
+
+
+# This maps back to host, however its better performance if its all kept in the container (?) 
+ZEPHYR_ROOT=/workspaces/zephyrproject
+
+START_TIMESTAMP=$(date)
+
+python3 -m venv $ZEPHYR_ROOT/.venv
+source $ZEPHYR_ROOT/.venv/bin/activate
 pip install --upgrade pip
 pip install west
-west init ~/zephyrproject
-cd ~/zephyrproject
+west init $ZEPHYR_ROOT
+cd $ZEPHYR_ROOT
 
 # update now pulls in all the source code, can take a while.....
 west update
@@ -19,7 +25,7 @@ west packages pip --install
 
 # install SDK - "west sdk install" is all toolchains
 # See https://github.com/zephyrproject-rtos/sdk-ng
-cd ~/zephyrproject/zephyr
+cd $ZEPHYR_ROOT/zephyr
 
 # ALL toolchains !! (Probably overkill!)
 west sdk install
@@ -28,6 +34,7 @@ west sdk install
 # TODO -> pick just the toolchains you want 
 # See https://docs.zephyrproject.org/latest/develop/toolchains/zephyr_sdk.html#toolchain-zephyr-sdk-install
 
+# TODO some combination of the below cmds...
 #wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_linux-x86_64_minimal.tar.xz
 #wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_linux-x86_64.tar.xz
 #wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz
@@ -41,14 +48,15 @@ west sdk install
 #sudo cp ~/zephyr-sdk-0.17.0/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
 #sudo udevadm control --reload
 
-
+END_TIMESTAMP=$(date)
+echo "START = $START_TIMESTAMP, END = $END_TIMESTAMP"
 echo "=========================== DONE ==============================="
 # run "west boards" to see supported builds 
 # build blinkey 
 
-# cd ~/zephyrproject
+# cd /workspaces/zephyrproject
 # source .venv/bin/activate
-# cd ~/zephyrproject/zephyr
+# cd /workspaces/zephyrproject/zephyr
 # west build -p always -b <your-board-name> samples/basic/blinky
 
 

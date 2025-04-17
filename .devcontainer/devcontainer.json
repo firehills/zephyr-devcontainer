@@ -11,6 +11,10 @@
 
 	},
 
+	"mounts": [
+    	"source=${localWorkspaceFolder}/zephyrproject,target=/workspaces/zephyrproject,type=bind,consistency=cached"
+	],
+
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 

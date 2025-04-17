@@ -28,13 +28,13 @@ Zephyr and SDK is setup in scripts/post-create.sh
 
 Setup virtual env
 ```sh
-cd ~/zephyrproject
+cd /workspaces/zephyrproject
 source .venv/bin/activate
 ```
 
 Build an example for Nordic nRF52840 - Note see "west boards" for supported alternatives
 ```sh
-cd ~/zephyrproject/zephyr
+cd /workspaces/zephyrproject/zephyr
 west build -p always -b nrf52840dk/nrf52840 samples/basic/blinky
 ```
 
